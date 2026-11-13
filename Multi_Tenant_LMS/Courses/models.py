@@ -21,3 +21,20 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Module(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    course = models.ForeignKey(
+        Course, 
+        on_delete=models.CASCADE, 
+        related_name='modules'
+    )
+    title = models.CharField(max_length=255)
+    lesson = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.course.title} -> {self.title}"
